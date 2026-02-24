@@ -294,7 +294,7 @@ const [comments, setComments] = useState<Record<number, Comment[]>>({});
         return;
       }
       const response = await axios.get(
-        `http://localhost:5000/api/posts/${id}`,
+        `http://localhost:5001/api/posts/${id}`,
         {
           headers: { Authorization: token },
         },
@@ -321,7 +321,7 @@ const [comments, setComments] = useState<Record<number, Comment[]>>({});
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        "http://localhost:5000/api/posts/create",
+        "http://localhost:5001/api/posts/create",
         { community_id: id, content: newPost },
         { headers: { Authorization: token } },
       );
@@ -345,7 +345,7 @@ const [comments, setComments] = useState<Record<number, Comment[]>>({});
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/api/posts/${postId}/like`,
+        `http://localhost:5001/api/posts/${postId}/like`,
         {},
         { headers: { Authorization: token } },
       );
@@ -371,7 +371,7 @@ const [comments, setComments] = useState<Record<number, Comment[]>>({});
     try {
       const token = localStorage.getItem("token");
       const res = await axios.get(
-        `http://localhost:5000/api/posts/${postId}/comments`,
+        `http://localhost:5001/api/posts/${postId}/comments`,
         {
           headers: { Authorization: token },
         },
@@ -388,7 +388,7 @@ const [comments, setComments] = useState<Record<number, Comment[]>>({});
     try {
       const token = localStorage.getItem("token");
       await axios.post(
-        `http://localhost:5000/api/posts/${postId}/comments`,
+        `http://localhost:5001/api/posts/${postId}/comments`,
         { content: commentText },
         { headers: { Authorization: token } },
       );

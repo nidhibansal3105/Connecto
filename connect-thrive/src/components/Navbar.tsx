@@ -17,7 +17,7 @@ const Navbar = () => {
         if (token) {
           try {
             const res = await axios.get(
-              "http://localhost:5000/api/users/profile",
+              "http://localhost:5001/api/users/profile",
               {
                 headers: { Authorization: `Bearer ${token}` },
               },

@@ -41,7 +41,7 @@ useEffect(() => {
   const fetchProfile = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await axios.get("http://localhost:5000/api/users/profile", {
+      const res = await axios.get("http://localhost:5001/api/users/profile", {
         headers: { Authorization: `Bearer ${token}` },
       });
 
@@ -66,7 +66,7 @@ const handleSave = async () => {
   try {
     const token = localStorage.getItem("token");
     await axios.put(
-      "http://localhost:5000/api/users/profile/update",
+      "http://localhost:5001/api/users/profile/update",
       tempProfile, // Buffer data bhejein
       { headers: { Authorization: `Bearer ${token}` } },
     );

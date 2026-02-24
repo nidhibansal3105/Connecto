@@ -7,11 +7,12 @@ const userRoutes = require("./routes/userRoutes");
 const app = express();
 
 // Middlewares
-app.use(cors()); // Frontend ko backend se baat karne ki permission dene ke liye
+app.use(cors());
+// Frontend ko backend se baat karne ki permission dene ke liye
 app.use(express.json()); // Frontend se aane wale JSON data ko samajhne ke liye
 
 // Routes setup
-// Ab aapke sare auth routes http://localhost:5000/api/auth/... par milenge
+// Ab aapke sare auth routes http://localhost:5001/api/auth/... par milenge
 app.use("/api/auth", authRoutes);
 app.use("/api/posts", postRoutes);
 app.use("/api/users",userRoutes)
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
 });
 
 // Port configuration
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
