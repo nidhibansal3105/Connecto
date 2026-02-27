@@ -1,37 +1,48 @@
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
-import { Home, Users, User, MessageCircle, Search, Bell, Menu, X } from "lucide-react";
-import { useState,useEffect } from "react";
+import {
+  Home,
+  Users,
+  User,
+  MessageCircle,
+  Search,
+  Bell,
+  Menu,
+  X,
+} from "lucide-react";
+import { useState, useEffect } from "react";
 import { Button } from "./ui/button";
-import axios from  "axios";
+import axios from "axios";
 const Navbar = () => {
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  
-    const [profileName, setProfileName] = useState("");
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
-  
-    useEffect(() => {
-      const fetchUser = async () => {
-        const token = localStorage.getItem("token");
-        if (token) {
-          try {
-            const res = await axios.get(
-              "http://localhost:5000/api/users/profile",
-              {
-                headers: { Authorization: `Bearer ${token}` },
-              },
-            );
-            setProfileName(res.data.username || res.data.name);
-            setIsLoggedIn(true);
-          } catch (err) {
-            console.error("Not logged in or token expired");
-            setIsLoggedIn(false);
-          }
+
+  const [profileName, setProfileName] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [profilePhoto, setProfilePhoto] = useState("");
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const res = await axios.get(
+            "http://localhost:5001/api/users/profile",
+            {
+              headers: { Authorization: `Bearer ${token}` },
+            }
+          );
+          setProfileName(res.data.username || res.data.name);
+          setIsLoggedIn(true);
+          setProfilePhoto(res.data.profile_photo || "");
+        } catch (err) {
+          console.error("Not logged in or token expired");
+          setIsLoggedIn(false);
         }
-      };
-      fetchUser();
-    }, []);
+      }
+    };
+    fetchUser();
+  }, []);
 
   const navItems = [
     { path: "/", icon: Home, label: "Home" },
@@ -85,33 +96,40 @@ const Navbar = () => {
 
           {/* Right side - Notifications & Profile */}
 
-{/* Right side - Notifications & Profile */}
-<div className="hidden md:flex items-center space-x-4">
-  <motion.button
-    className="relative p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
-    whileHover={{ scale: 1.1 }}
-    whileTap={{ scale: 0.9 }}
-  >
-    <Bell size={20} />
-    <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
-  </motion.button>
-  
-  <Link to="/profile">
-    <motion.div
-      className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center cursor-pointer overflow-hidden border border-white/10"
-      whileHover={{ scale: 1.1 }}
-      whileTap={{ scale: 0.9 }}
-    >
-      {isLoggedIn && profileName ? (
-        <span className="text-sm font-bold text-primary-foreground uppercase">
-          {profileName.charAt(0)}
-        </span>
-      ) : (
-        <User size={18} className="text-primary-foreground" />
-      )}
-    </motion.div>
-  </Link>
-</div>
+          {/* Right side - Notifications & Profile */}
+          <div className="hidden md:flex items-center space-x-4">
+            <motion.button
+              className="relative p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-colors"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+            >
+              <Bell size={20} />
+              <span className="absolute top-1 right-1 w-2 h-2 bg-destructive rounded-full" />
+            </motion.button>
+
+            <Link to="/profile">
+              <motion.div
+                className="w-9 h-9 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center cursor-pointer overflow-hidden border border-white/10"
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {/* ✅ Show photo if exists, else initial, else icon */}
+                {profilePhoto ? (
+                  <img
+                    src={profilePhoto}
+                    alt="Profile"
+                    className="w-full h-full object-cover"
+                  />
+                ) : isLoggedIn && profileName ? (
+                  <span className="text-sm font-bold text-primary-foreground uppercase">
+                    {profileName.charAt(0)}
+                  </span>
+                ) : (
+                  <User size={18} className="text-primary-foreground" />
+                )}
+              </motion.div>
+            </Link>
+          </div>
 
           {/* Mobile menu button */}
           <Button

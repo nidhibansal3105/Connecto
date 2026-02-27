@@ -8,7 +8,7 @@ router.get("/profile", authMiddleware, async (req, res) => {
   try {
     // req.user.id aapke authMiddleware se aayega
     const [rows] = await db.query(
-      "SELECT username, email, hometown,bio FROM users WHERE id = ?",
+      "SELECT username, email, hometown,bio, profile_photo FROM users WHERE id = ?",
       [req.user.id],
     );
     if (rows.length === 0)
