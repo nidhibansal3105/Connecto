@@ -318,7 +318,6 @@ const Profile = () => {
                     <h2 className="text-xl font-display font-semibold mb-4">
                       My Communities
                     </h2>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
                     {myCommunities.length === 0 ? (
                       <div className="text-center py-8 text-muted-foreground">
                         <p className="mb-2">You haven't joined any communities yet.</p>
@@ -355,7 +354,6 @@ const Profile = () => {
                         ))}
                       </div>
                     )}
-                    </div>
                   </div>
 
                   {/* Activity Stats */}
